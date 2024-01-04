@@ -1,5 +1,8 @@
 name: Release
 
+permissions:
+  contents: write
+
 on:
   push:
     tags:
@@ -8,8 +11,6 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -17,8 +18,8 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: lts/*
+          node-version: 18.x
 
-      - run: npx changelogithub
+      - run: npx changeloggithub@latest
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

@@ -51,7 +51,7 @@
   "files": [
     "dist",
     "src/load.js",
-    "src/Overlay.js",
+    "src/Overlay.jsx",
     "src/styles/overlay.css"
   ],
   "scripts": {
