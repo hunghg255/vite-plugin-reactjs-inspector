@@ -1,0 +1,100 @@
+{
+  "name": "vite-plugin-reactjs-inspector",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@8.14.0",
+  "description": "",
+  "license": "MIT",
+  "homepage": "https://github.com/hunghg255/vite-plugin-reactjs-inspector#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hunghg255/vite-plugin-reactjs-inspector.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hunghg255/vite-plugin-reactjs-inspector/issues"
+  },
+  "keywords": [
+    "reactjs",
+    "vite",
+    "inspector",
+    "plugin"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "import": "./dist/vite.js",
+      "require": "./dist/vite.cjs"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js",
+      "require": "./dist/types.cjs"
+    },
+    "./*": "./*"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./*"
+      ]
+    }
+  },
+  "files": [
+    "dist",
+    "src/load.js",
+    "src/Overlay.js",
+    "src/styles/overlay.css"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch src",
+    "build:fix": "esno scripts/postbuild.ts",
+    "lint": "eslint .",
+    "play": "npm -C playground run dev",
+    "prepublishOnly": "npm run build",
+    "release": "bumpp && npm publish",
+    "start": "esno src/index.ts",
+    "test": "vitest"
+  },
+  "peerDependencies": {
+    "vite": ">=3"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@babel/core": "^7.23.7",
+    "@babel/preset-env": "^7.23.7",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "magic-string": "^0.30.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "unplugin": "^1.6.0"
+  },
+  "devDependencies": {
+    "@babel/types": "^7.23.6",
+    "@types/node": "^20.10.6",
+    "bumpp": "^9.2.1",
+    "chalk": "^5.3.0",
+    "eslint": "^8.56.0",
+    "esno": "^0.17.0",
+    "nodemon": "^3.0.2",
+    "rimraf": "^5.0.5",
+    "tsup": "^7.3.0",
+    "typescript": "^5.3.3",
+    "vite": "^4.4.12",
+    "vitest": "^0.34.6"
+  }
+}

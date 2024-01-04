@@ -1,0 +1,34 @@
+{
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "packageManager": "pnpm@8.14.0",
+  "description": "Vite plugin react inspector",
+  "license": "MIT",
+  "homepage": "https://github.com/hunghg255/vite-plugin-reactjs-inspector#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hunghg255/vite-plugin-reactjs-inspector.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hunghg255/vite-plugin-reactjs-inspector/issues"
+  },
+  "scripts": {
+    "play": "pnpm run -r --filter=./packages/playground dev",
+    "lint": "eslint --fix .",
+    "dev": "pnpm run -r --filter=./packages/core dev",
+    "build": "pnpm run -r --filter=./packages/core build",
+    "release": "bumpp && pnpm -r publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "bumpp": "^9.2.1",
+    "eslint": "^8.56.0",
+    "esno": "^0.17.0",
+    "rimraf": "^5.0.5",
+    "tsup": "^7.3.0",
+    "typescript": "^5.3.3",
+    "vite": "^4.4.12",
+    "vitest": "^0.34.6"
+  }
+}
