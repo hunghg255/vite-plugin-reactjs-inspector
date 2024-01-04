@@ -1,30 +1,39 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+<a href="https://www.npmjs.com/package/vite-plugin-reactjs-inspector"><img src="https://raw.githubusercontent.com/hunghg255/vite-plugin-reactjs-inspector/main/logo.svg" width="180" alt="vite-plugin-reactjs-inspector"></a>
+</p>
 
-Currently, two official plugins are available:
+<p align="center">
+  <a href="https://www.npmjs.com/package/vite-plugin-reactjs-inspector" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/v/vite-plugin-reactjs-inspector" alt="NPM Version" /></a>
+  <a href="https://www.npmjs.com/package/vite-plugin-reactjs-inspector" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/dt/vite-plugin-reactjs-inspector" alt="NPM Downloads" /></a>
+  <a href="https://www.npmjs.com/package/vite-plugin-reactjs-inspector/blob/master/LICENSE" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/github/license/hunghg255/vite-plugin-reactjs-inspector" alt="License" /></a>
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<p align="center">
+<a href="https://stackblitz.com/edit/vitejs-vite-vqjpeq?file=src%2FApp.jsx"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt=""></a>
+</p>
 
-## Expanding the ESLint configuration
+## 📖 Introduction
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+A vite plugin which provides the ability that to jump to the local IDE when you click the element of browser automatically.
 
-- Configure the top-level `parserOptions` property like this:
+## 📦 Installation
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+npm install vite-plugin-reactjs-inspector -D
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 🦄 Usage
+
+### Configuration Vite
+
+```ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import VitePluginReactInspector from 'vite-plugin-reactjs-inspector/vite'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react(), VitePluginReactInspector()],
+})
+```

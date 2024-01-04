@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-<a href="https://stackblitz.com/edit/stackblitz-starters-hp6zdq?file=src%2FApp.tsx"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt=""></a>
+<a href="https://stackblitz.com/edit/vitejs-vite-vqjpeq?file=src%2FApp.jsx"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt=""></a>
 </p>
 
 ## 📖 Introduction
