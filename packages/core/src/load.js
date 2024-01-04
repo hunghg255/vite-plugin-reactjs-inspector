@@ -21,10 +21,6 @@ function load() {
     return
   createInspectorContainer()
 
-  const divEle = document.createElement('div')
-  divEle.id = CONTAINER_ID
-  document.body.appendChild(divEle)
-
   const domContainer = document.querySelector(`#${CONTAINER_ID}`)
 
   if (domContainer) ReactDOM.createRoot(domContainer).render(React.createElement(Overlay))
