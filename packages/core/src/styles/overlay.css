@@ -28,10 +28,10 @@
   color:#213547;
   font-weight: 700;
 }
-.react-inspector-container:hover .vue-inspector-banner {
+.react-inspector-container:hover .react-inspector-banner {
   display: block;
 }
-.react-inspector-container--disabled:hover .vue-inspector-banner {
+.react-inspector-container--disabled:hover .react-inspector-banner {
   display: none;
 }
 .react-inspector-overlay {

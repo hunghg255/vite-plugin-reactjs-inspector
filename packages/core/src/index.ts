@@ -58,7 +58,7 @@ export const unpluginFactory: UnpluginFactory<PluginOptions | undefined> = optio
         if (fs.existsSync(file))
           return await fs.promises.readFile(file, 'utf-8')
         else
-          console.error(`failed to find file for vue-inspector: ${file}, referenced by id ${id}.`)
+          console.error(`failed to find file for react-inspector: ${file}, referenced by id ${id}.`)
       }
     },
     transform: (code, id) => {
