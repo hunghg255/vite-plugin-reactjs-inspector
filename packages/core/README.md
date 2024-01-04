@@ -17,6 +17,8 @@
 
 A vite plugin which provides the ability that to jump to the local IDE when you click the element of browser automatically.
 
+![demo](https://raw.githubusercontent.com/hunghg255/vite-plugin-reactjs-inspector/main/public/demo.gif)
+
 ## 📦 Installation
 
 ```bash
