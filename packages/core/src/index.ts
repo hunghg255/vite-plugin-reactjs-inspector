@@ -10,7 +10,6 @@ import fs from 'node:fs'
 import { normalizePath } from 'vite'
 import { cwd } from 'node:process'
 
-
 function getInspectorPath() {
   const pluginPath = normalizePath(path.dirname(fileURLToPath(import.meta.url)))
   return pluginPath.replace(/\/dist$/, '/src')
@@ -18,6 +17,7 @@ function getInspectorPath() {
 
 export const unpluginFactory: UnpluginFactory<PluginOptions | undefined> = options => {
   const inspectorPath = getInspectorPath()
+  const rootPath = cwd().replace(/\\/g, '/');
 
   return {
     name: 'vite-plugin-reactjs-inspector',
@@ -46,7 +46,7 @@ export const unpluginFactory: UnpluginFactory<PluginOptions | undefined> = optio
     async load(id) {
       if (id === 'virtual:react-inspector-options') {
         return `export default {
-          cwdPath: '${cwd()}/',
+          cwdPath: '${rootPath}/',
         }`
       }
       if (id.startsWith(inspectorPath)) {
@@ -90,7 +90,7 @@ export const unpluginFactory: UnpluginFactory<PluginOptions | undefined> = optio
               const { start } = node
               const { column, line } = node?.loc?.start as any
               const toInsertPosition = start + parseJSXIdentifier(node.openingElement.name as any).length + 1;
-              const content = ` data-react-inspector="${filename.replace(`${cwd()}/`, '')}:${line}:${column}"`
+              const content = ` data-react-inspector="${filename.replace(`${rootPath}/`, '')}:${line}:${column}"`
               s.appendLeft(toInsertPosition, content)
             }
           },
