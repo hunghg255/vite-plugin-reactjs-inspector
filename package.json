@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "private": true,
   "packageManager": "pnpm@8.14.0",
   "description": "Vite plugin react inspector",
