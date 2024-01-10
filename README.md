@@ -1,12 +1,18 @@
-
 <p align="center">
-<a href="https://www.npmjs.com/package/vite-plugin-reactjs-inspector"><img src="https://raw.githubusercontent.com/hunghg255/vite-plugin-reactjs-inspector/main/logo.svg" width="180" alt="vite-plugin-reactjs-inspector"></a>
+<a href="https://www.npmjs.com/package/vite-plugin-reactjs-inspector" target="_blank" rel="noopener noreferrer">
+<img src="https://api.iconify.design/bi:plugin.svg?color=%23a985ff" alt="logo" width='100'/></a>
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/vite-plugin-reactjs-inspector" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/v/vite-plugin-reactjs-inspector" alt="NPM Version" /></a>
-  <a href="https://www.npmjs.com/package/vite-plugin-reactjs-inspector" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/dt/vite-plugin-reactjs-inspector" alt="NPM Downloads" /></a>
-  <a href="https://www.npmjs.com/package/vite-plugin-reactjs-inspector/blob/master/LICENSE" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/github/license/hunghg255/vite-plugin-reactjs-inspector" alt="License" /></a>
+  A plugin inspector reactjs element for <a href="https://vitejs.dev/" target="_blank" rel="noopener noreferrer">Vitejs</a>
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/vite-plugin-reactjs-inspector" target="_blank" rel="noopener noreferrer"><img src="https://badge.fury.io/js/vite-plugin-reactjs-inspector.svg" alt="NPM Version" /></a>
+  <a href="https://www.npmjs.com/package/vite-plugin-reactjs-inspector" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/dt/vite-plugin-reactjs-inspector.svg?logo=npm" alt="NPM Downloads" /></a>
+  <a href="https://bundlephobia.com/result?p=vite-plugin-reactjs-inspector" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/bundlephobia/minzip/vite-plugin-reactjs-inspector" alt="Minizip" /></a>
+  <a href="https://github.com/hunghg255/vite-plugin-reactjs-inspector/graphs/contributors" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/all_contributors-1-orange.svg" alt="Contributors" /></a>
+  <a href="https://github.com/hunghg255/vite-plugin-reactjs-inspector/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/github/license/hunghg255/vite-plugin-reactjs-inspector" alt="License" /></a>
 </p>
 
 <p align="center">
