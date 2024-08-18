@@ -1,44 +1,48 @@
-import type { UnpluginFactory } from 'unplugin'
-import { createUnplugin } from 'unplugin'
+import fs from 'node:fs'
+import path from 'node:path'
+import { cwd } from 'node:process'
+import { fileURLToPath } from 'node:url'
 import { parseSync, traverse } from '@babel/core'
 import MagicString from 'magic-string'
+import { type UnpluginFactory, createUnplugin } from 'unplugin'
+import { normalizePath } from 'vite'
 import { idToFile, parseJSXIdentifier, parseReactRequest } from './utils'
 import type { PluginOptions } from './types'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import fs from 'node:fs'
-import { normalizePath } from 'vite'
-import { cwd } from 'node:process'
 
 function getInspectorPath() {
-  const pluginPath = normalizePath(path.dirname(fileURLToPath(import.meta.url)))
+  const pluginPath = normalizePath(
+    path.dirname(fileURLToPath(import.meta.url)),
+  )
   return pluginPath.replace(/\/dist$/, '/src')
 }
 
-export const unpluginFactory: UnpluginFactory<PluginOptions | undefined> = options => {
+const plugin: UnpluginFactory<PluginOptions | undefined> = () => {
   const inspectorPath = getInspectorPath()
-  const rootPath = cwd().replace(/\\/g, '/');
+  const rootPath = cwd().replaceAll('\\', '/')
 
   return {
     name: 'vite-plugin-reactjs-inspector',
     enforce: 'pre',
-    apply(_, { command }) {
+    apply(_: any, { command }: any) {
       // apply only on serve and not for test
       return command === 'serve' && process.env.NODE_ENV !== 'test'
     },
     config: () => {
       return {
         optimizeDeps: {
-          include: ['react-dom'],
+          include: ['react', 'react-dom'],
         },
       }
     },
-    async resolveId(importee: string) {
+    resolveId(importee: string) {
       if (importee.startsWith('virtual:react-inspector-options')) {
         return importee
       }
       if (importee.startsWith('virtual:react-inspector-path:')) {
-        const resolved = importee.replace('virtual:react-inspector-path:', `${inspectorPath}/`)
+        const resolved = importee.replace(
+          'virtual:react-inspector-path:',
+          `${inspectorPath}/`,
+        )
         return resolved
       }
     },
@@ -55,16 +59,20 @@ export const unpluginFactory: UnpluginFactory<PluginOptions | undefined> = optio
           return
         // read file ourselves to avoid getting shut out by vites fs.allow check
         const file = idToFile(id)
-        if (fs.existsSync(file))
+        if (fs.existsSync(file)) {
           return await fs.promises.readFile(file, 'utf-8')
-        else
-          console.error(`failed to find file for react-inspector: ${file}, referenced by id ${id}.`)
+        }
+        else {
+          console.error(
+            `failed to find file for react-inspector: ${file}, referenced by id ${id}.`,
+          )
+        }
       }
     },
     transform: (code, id) => {
-      const { filename, query } = parseReactRequest(id)
+      const { filename } = parseReactRequest(id)
 
-      const isJsx = filename.endsWith('.jsx') || filename.endsWith('.tsx');
+      const isJsx = filename.endsWith('.jsx') || filename.endsWith('.tsx')
 
       if (isJsx) {
         const transformedCode = code
@@ -79,17 +87,19 @@ export const unpluginFactory: UnpluginFactory<PluginOptions | undefined> = optio
             '@babel/preset-typescript',
           ],
         })
-        traverse(ast, {
+        traverse(ast as any, {
           enter({ node }) {
             if (node.type === 'JSXElement') {
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-expect-error
               if (node?.openingElement?.name?.object?.name === 'React')
                 return
 
               const { start } = node
               const { column, line } = node?.loc?.start as any
-              const toInsertPosition = start + parseJSXIdentifier(node.openingElement.name as any).length + 1;
+              const toInsertPosition
+                = start
+                + parseJSXIdentifier(node.openingElement.name as any).length
+                + 1
               const content = ` data-react-inspector="${filename.replace(`${rootPath}/`, '')}:${line}:${column}"`
               s.appendLeft(toInsertPosition, content)
             }
@@ -105,7 +115,7 @@ export const unpluginFactory: UnpluginFactory<PluginOptions | undefined> = optio
         }
       }
     },
-    transformIndexHtml(html) {
+    transformIndexHtml(html: any) {
       return {
         html,
         tags: [
@@ -123,6 +133,6 @@ export const unpluginFactory: UnpluginFactory<PluginOptions | undefined> = optio
   }
 }
 
-export const HostQrCode = /* #__PURE__ */ createUnplugin(unpluginFactory)
+const VitePluginReactInspector = /* #__PURE__ */ createUnplugin(plugin)
 
-export default HostQrCode
+export default VitePluginReactInspector

@@ -1,7 +1,6 @@
-/* eslint-disable new-cap */
 import React from 'react'
-import Overlay from 'virtual:react-inspector-path:Overlay.jsx'
 import ReactDOM from 'react-dom/client'
+import Overlay from 'virtual:react-inspector-path:Overlay.jsx'
 
 const CONTAINER_ID = 'react-inspector-container'
 
@@ -11,7 +10,7 @@ function createInspectorContainer() {
 
   const el = document.createElement('div')
   el.setAttribute('id', CONTAINER_ID)
-  document.getElementsByTagName('body')[0].appendChild(el)
+  document.querySelectorAll('body')[0].append(el)
   return el
 }
 
@@ -23,7 +22,8 @@ function load() {
 
   const domContainer = document.querySelector(`#${CONTAINER_ID}`)
 
-  if (domContainer) ReactDOM.createRoot(domContainer).render(React.createElement(Overlay))
+  if (domContainer)
+    ReactDOM.createRoot(domContainer).render(React.createElement(Overlay))
 }
 
 load()

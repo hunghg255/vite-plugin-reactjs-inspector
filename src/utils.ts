@@ -1,8 +1,8 @@
-
+/* eslint-disable no-prototype-builtins */
+// @ts-ignore
 export function parseJSXIdentifier(name: JSXIdentifier | JSXMemberExpression) {
   if (name.type === 'JSXIdentifier')
     return name.name
-
   else
     return `${parseJSXIdentifier(name.object)}.${parseJSXIdentifier(name.property)}`
 }

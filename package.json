@@ -1,34 +1,99 @@
 {
-  "type": "module",
+  "name": "vite-plugin-reactjs-inspector",
   "version": "0.0.9",
-  "private": true,
-  "packageManager": "pnpm@8.14.0",
-  "description": "Vite plugin react inspector",
+  "packageManager": "pnpm@9.7.1",
+  "description": "A Vite plugin to inspect React components",
+  "type": "module",
+  "keywords": [
+    "reactjs",
+    "vite",
+    "inspector",
+    "plugin"
+  ],
   "license": "MIT",
   "homepage": "https://github.com/hunghg255/vite-plugin-reactjs-inspector#readme",
+  "bugs": {
+    "url": "https://github.com/hunghg255/vite-plugin-reactjs-inspector/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hunghg255/vite-plugin-reactjs-inspector.git"
   },
-  "bugs": {
-    "url": "https://github.com/hunghg255/vite-plugin-reactjs-inspector/issues"
+  "files": [
+    "dist",
+    "src/Overlay.jsx",
+    "src/load.js",
+    "src/styles/overlay.css"
+  ],
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "require": "./dist/vite.cjs",
+      "import": "./dist/vite.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "require": "./dist/types.cjs",
+      "import": "./dist/types.js"
+    },
+    "./*": "./*"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./*"
+      ]
+    }
   },
   "scripts": {
-    "play": "pnpm run -r --filter=./packages/playground dev",
-    "lint": "eslint --fix .",
-    "dev": "pnpm run -r --filter=./packages/core dev",
-    "build": "pnpm run -r --filter=./packages/core build",
-    "release": "bumpp && pnpm -r publish"
+    "lint": "eslint src --quiet",
+    "lint:fix": "eslint src --fix",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "release": "bumpp && pnpm publish",
+    "prepublishOnly": "pnpm run build",
+    "playground": "pnpm --dir ./playground run dev"
+  },
+  "peerDependencies": {
+    "vite": ">=3"
+  },
+  "dependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/preset-react": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
+    "magic-string": "^0.30.11",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "unplugin": "^1.12.2"
   },
   "devDependencies": {
-    "@types/node": "^20.10.6",
-    "bumpp": "^9.2.1",
-    "eslint": "^8.56.0",
+    "@antfu/eslint-config": "^2.25.1",
+    "@eslint-react/eslint-plugin": "^1.10.1",
+    "@babel/types": "^7.25.2",
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^20.15.0",
+    "bumpp": "^9.5.1",
+    "eslint": "^8.57.0",
     "esno": "^0.17.0",
-    "rimraf": "^5.0.5",
-    "tsup": "^7.3.0",
-    "typescript": "^5.3.3",
-    "vite": "^4.4.12",
-    "vitest": "^0.34.6"
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.1",
+    "vitest": "^0.34.6",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.9"
   }
 }
