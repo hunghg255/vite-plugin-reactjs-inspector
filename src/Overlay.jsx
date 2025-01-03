@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import inspectorOptions from 'virtual:react-inspector-options'
 
 import './styles/overlay.css'
 
@@ -7,11 +8,14 @@ const color = {
   active: '#42b883',
 }
 
+const KEY_DATA = 'data-react-inspector'
 const KEY_IGNORE = 'data-react-inspector-ignore'
 
 function getData(el) {
   return !!el
 }
+
+const splitRE = /(.+):(\d+):(\d+)$/
 
 function getTargetNode(e) {
   const path = e.path ?? e.composedPath()
@@ -41,17 +45,21 @@ function getTargetNode(e) {
     }
   }
 
-  const debugValues = fiber?._debugSource
+  const debugValues = fiber?.memoizedProps?.[KEY_DATA]
 
   const componentName = fiber?._debugOwner?.type?.displayName || fiber?._debugOwner?.type?.name || 'Unknown'
+
+  const match = debugValues?.match(splitRE)
+
+  const [, file, line, column] = match || []
 
   return {
     targetNode,
     params: debugValues
       ? {
-          file: debugValues.fileName,
-          line: debugValues.lineNumber,
-          column: debugValues.columnNumber,
+          file,
+          line,
+          column,
           title: componentName,
         }
       : null,
@@ -64,7 +72,7 @@ function openInEditor(baseUrl, file, line, column) {
    * https://github.com/vitejs/vite/blob/d59e1acc2efc0307488364e9f2fad528ec57f204/packages/vite/src/node/server/index.ts#L569-L570
    */
   const promise = fetch(
-    `${baseUrl}/__open-in-editor?file=${file}:${line}:${column}`,
+    `${baseUrl}/__open-in-editor?file=${inspectorOptions.cwdPath}${file}:${line}:${column}`,
     {
       mode: 'no-cors',
     },
