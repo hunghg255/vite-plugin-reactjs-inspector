@@ -1,23 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import inspectorOptions from 'virtual:react-inspector-options'
 
 import './styles/overlay.css'
-import { flushSync } from 'react-dom'
 
 const color = {
   disabled: '#E2C6C6',
   active: '#42b883',
 }
 
-const KEY_DATA = 'data-react-inspector'
 const KEY_IGNORE = 'data-react-inspector-ignore'
 
 function getData(el) {
-  return el?.attributes?.getNamedItem?.(KEY_DATA)?.value ?? el?.getAttribute?.(KEY_DATA)
+  return !!el
 }
 
 function getTargetNode(e) {
-  const splitRE = /(.+):(\d+):(\d+)$/
   const path = e.path ?? e.composedPath()
   if (!path) {
     return {
@@ -27,23 +23,36 @@ function getTargetNode(e) {
   }
   const ignoreIndex = path.findIndex(node => node?.hasAttribute?.(KEY_IGNORE))
   const targetNode = path.slice(ignoreIndex + 1).find(node => getData(node))
+
   if (!targetNode) {
     return {
       targetNode: null,
       params: null,
     }
   }
-  const match = getData(targetNode)?.match(splitRE)
 
-  const [, file, line, column] = match || []
+  const key = Object.keys(targetNode).find(key => key.startsWith('__reactFiber$'))
+  const fiber = targetNode[key]
+
+  if (!fiber) {
+    return {
+      targetNode,
+      params: null,
+    }
+  }
+
+  const debugValues = fiber?._debugSource
+
+  const componentName = fiber?._debugOwner?.type?.displayName || fiber?._debugOwner?.type?.name || 'Unknown'
+
   return {
     targetNode,
-    params: match
+    params: debugValues
       ? {
-          file,
-          line,
-          column,
-          title: file,
+          file: debugValues.fileName,
+          line: debugValues.lineNumber,
+          column: debugValues.columnNumber,
+          title: componentName,
         }
       : null,
   }
@@ -55,7 +64,7 @@ function openInEditor(baseUrl, file, line, column) {
    * https://github.com/vitejs/vite/blob/d59e1acc2efc0307488364e9f2fad528ec57f204/packages/vite/src/node/server/index.ts#L569-L570
    */
   const promise = fetch(
-    `${baseUrl}/__open-in-editor?file=${inspectorOptions.cwdPath}${file}:${line}:${column}`,
+    `${baseUrl}/__open-in-editor?file=${file}:${line}:${column}`,
     {
       mode: 'no-cors',
     },
@@ -86,13 +95,12 @@ function Overlay() {
   const baseUrl = useMemo(() => {
     const isClient = typeof window !== 'undefined'
     const importMetaUrl = isClient ? new URL(import.meta.url) : {}
-    const protocol = inspectorOptions.serverOptions?.https ? 'https:' : importMetaUrl?.protocol
-    const hostOpts = inspectorOptions.serverOptions?.host
-    const host = (hostOpts && hostOpts !== true) ? hostOpts : importMetaUrl?.hostname
-    const port = (hostOpts && hostOpts !== true) ? inspectorOptions.serverOptions?.port : importMetaUrl?.port
-    const baseUrl = isClient ? (inspectorOptions.openInEditorHost || `${protocol}//${host}:${port}`) : ''
+    const protocol = importMetaUrl?.protocol
+    const host = importMetaUrl?.hostname
+    const port = importMetaUrl?.port
+    const baseUrl = isClient ? `${protocol}//${host}:${port}` : ''
     return baseUrl
-  }, [inspectorOptions])
+  }, [])
 
   const closeOverlay = () => {
     setOverlayVisible(false)
@@ -148,16 +156,14 @@ function Overlay() {
     const { targetNode, params } = getTargetNode(e)
     if (targetNode) {
       const rect = targetNode.getBoundingClientRect()
-      flushSync(() => {
-        setOverlayVisible(true)
-        setPosition({
-          x: rect.x,
-          y: rect.y,
-          width: rect.width,
-          height: rect.height,
-        })
-        setLinkParams(params)
+      setOverlayVisible(true)
+      setPosition({
+        x: rect.x,
+        y: rect.y,
+        width: rect.width,
+        height: rect.height,
       })
+      setLinkParams(params)
     }
     else {
       closeOverlay()

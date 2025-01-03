@@ -61,7 +61,7 @@
     "dev": "tsup --watch",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
-    "release": "bumpp",
+    "release": "bumpp && npm publish",
     "prepublishOnly": "pnpm run build",
     "playground": "pnpm --dir ./playground run dev"
   },
@@ -69,31 +69,26 @@
     "vite": ">=3"
   },
   "dependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/preset-env": "^7.25.3",
-    "@babel/preset-react": "^7.24.7",
-    "@babel/preset-typescript": "^7.24.7",
-    "magic-string": "^0.30.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "unplugin": "^1.12.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.25.1",
-    "@eslint-react/eslint-plugin": "^1.10.1",
     "@babel/types": "^7.25.2",
+    "@eslint-react/eslint-plugin": "^1.10.1",
     "@types/babel__core": "^7.20.5",
     "@types/node": "^20.15.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "bumpp": "^9.5.1",
     "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.9",
     "esno": "^0.17.0",
     "tsup": "^8.2.4",
     "typescript": "^5.5.4",
     "vite": "^5.4.1",
-    "vitest": "^0.34.6",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.9"
+    "vitest": "^0.34.6"
   }
 }
