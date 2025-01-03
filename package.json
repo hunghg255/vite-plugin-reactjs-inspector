@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-reactjs-inspector",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "packageManager": "pnpm@9.7.1",
   "description": "A Vite plugin to inspect React components",
   "type": "module",
