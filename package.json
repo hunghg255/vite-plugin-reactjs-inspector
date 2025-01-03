@@ -61,7 +61,7 @@
     "dev": "tsup --watch",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
-    "release": "bumpp && npm publish",
+    "release": "bumpp",
     "prepublishOnly": "pnpm run build",
     "playground": "pnpm --dir ./playground run dev"
   },
